@@ -5,6 +5,7 @@ import com.example.design.model.MenuCooking;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
@@ -14,6 +15,7 @@ import java.util.List;
  * Created by viver on 16/4/27.
  */
 @Repository
+@Mapper
 public interface CookingMenuMapper {
   /**
    * add one recipe to a menu.
@@ -28,9 +30,9 @@ public interface CookingMenuMapper {
   int deleteCookingFromMenu(MenuCooking menuCooking);
 
   /**
-   * select one menu's  all recipes
+   * select one menu's  all recipes.
    */
-  @Select("SELECT * FROM `cooking` WHERE `cookingId` IN (SELECT `cookingId` FROM `menu_cooking` " +
-          "WHERE menuId = #{menuId})")
+  @Select("SELECT * FROM `cooking` WHERE `cookingId` IN (SELECT `cookingId` FROM `menu_cooking` "
+          + "WHERE `menuId` = #{menuId} AND `state`=0) AND `state`=0")
   List<Cooking> findAllCookingOfMenu(long menuId);
 }

@@ -28,6 +28,7 @@ public class ShowService {
   }
 
   /**
+   * Update show information. add show to one recipe
    * add show to one recipe
    */
   public int addShowToCooking(long cookingId, long showId) {
@@ -87,6 +88,7 @@ public class ShowService {
   }
 
   /**
+   * update showLike's state. delete showLike's record
    * delete one showLike record
    * @param userId
    * @param showId

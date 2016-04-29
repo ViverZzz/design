@@ -18,15 +18,15 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
-  `commentId`    INT(11)     NOT NULL,
-  `userId`       INT(11)     NOT NULL,
-  `commentDate`  DATETIME    NOT NULL,
-  `comment`      TEXT        NOT NULL
+  `commentId`    INT(11) AUTO_INCREMENT NOT NULL,
+  `userId`       INT(11)                NOT NULL,
+  `commentDate`  DATETIME               NOT NULL,
+  `comment`      TEXT                   NOT NULL
   COMMENT '评论内容',
-  `commentType`  VARCHAR(10) NOT NULL
+  `commentType`  VARCHAR(10)            NOT NULL
   COMMENT 'menu表示菜单，cooking表示菜谱，show表示作品',
-  `commentForId` INT(11)     NOT NULL,
-  `state`        INT(1)      NOT NULL DEFAULT '0',
+  `commentForId` INT(11)                NOT NULL,
+  `state`        INT(1)                 NOT NULL DEFAULT '0',
   PRIMARY KEY (`commentId`)
 )
   ENGINE = InnoDB
@@ -45,7 +45,7 @@ CREATE TABLE `cooking` (
   `cookingName`    VARCHAR(20)
                    CHARACTER SET utf8
                    COLLATE utf8_bin NOT NULL,
-  `cookingId`      INT(11)          NOT NULL,
+  `cookingId`      INT(11)          NOT NULL AUTO_INCREMENT,
   `cookingStyle`   VARCHAR(50)      NOT NULL
   COMMENT '菜谱类型',
   `cookingDate`    DATETIME                  DEFAULT NULL
@@ -253,18 +253,18 @@ VALUES ('1', '3', 'user', '3', '2016-04-11 15:47:26', '发布黑暗料理', '0',
 -- ----------------------------
 DROP TABLE IF EXISTS `share`;
 CREATE TABLE `share` (
-  `shareId`     INT(11)  NOT NULL,
-  `shareUserId` INT(11)  NOT NULL
+  `shareId`     INT(11) AUTO_INCREMENT NOT NULL,
+  `shareUserId` INT(11)                NOT NULL
   COMMENT '分享用户Id',
-  `shareDate`   DATETIME NOT NULL
+  `shareDate`   DATETIME               NOT NULL
   COMMENT '分享发布时间',
-  `shareType`   VARCHAR(10)        DEFAULT NULL
+  `shareType`   VARCHAR(10)                      DEFAULT NULL
   COMMENT '分享类型，cooking，menu',
-  `itemId`      INT(11)            DEFAULT NULL
+  `itemId`      INT(11)                          DEFAULT NULL
   COMMENT '分享的cooking或menu的Id',
-  `shareConent` TEXT     NOT NULL
+  `shareConent` TEXT                   NOT NULL
   COMMENT '分享配文',
-  `state`       INT(1)   NOT NULL  DEFAULT '0',
+  `state`       INT(1)                 NOT NULL  DEFAULT '0',
   PRIMARY KEY (`shareId`)
 )
   ENGINE = InnoDB
@@ -284,10 +284,17 @@ CREATE TABLE `show` (
   `showIntro`   VARCHAR(255)           NOT NULL
   COMMENT '介绍',
   `showPicture` VARCHAR(50)            NOT NULL,
+<<<<<<< HEAD
+  `cookingId`   INT(11)                NOT NULL
+  COMMENT '关联菜谱Id',
+  `showDate`    DATETIME               NOT NULL,
+  `userId`      INT(11)                NOT NULL,
+=======
   `cookingId`   INT(11) DEFAULT '0'    NOT NULL
   COMMENT '关联菜谱Id',
   `showDate`    DATETIME               NOT NULL,
   `authorId`    INT(11)                NOT NULL,
+>>>>>>> 13d8d3671c1558c4b0167cd9f5af70b298ce74e8
   `showLikeNum` INT(10)                NOT NULL DEFAULT '0',
   `state`       INT(1)                 NOT NULL DEFAULT '0'
   COMMENT '作品状态，0为正常',
@@ -326,13 +333,13 @@ INSERT INTO `show_like` VALUES ('1', '3', '0');
 -- ----------------------------
 DROP TABLE IF EXISTS `star`;
 CREATE TABLE `star` (
-  `starId`   INT(11)     NOT NULL,
-  `userId`   INT(11)     NOT NULL,
-  `starType` VARCHAR(10) NOT NULL
+  `starId`   INT(11) AUTO_INCREMENT NOT NULL,
+  `userId`   INT(11)                NOT NULL,
+  `starType` VARCHAR(10)            NOT NULL
   COMMENT '收藏类型，cooking代表菜谱,menu代表菜单',
   `itemId`   INT(11) DEFAULT NULL
   COMMENT '具体收藏的menu或者cooking的Id',
-  `starDate` DATETIME    NOT NULL
+  `starDate` DATETIME               NOT NULL
   COMMENT '收藏时间',
   `state`    INT(1)  DEFAULT '0'
   COMMENT '0表示正常，1表示已删除',

@@ -3,6 +3,7 @@ package com.example.design.mapper;
 import com.example.design.model.Cooking;
 
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -11,21 +12,25 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 /**
- * 菜谱持久化接口 Created by lxh on 4/20/16.
+ * 菜谱持久化接口.
+ *
+ * @author lxh
+ * @version 0.1
  */
 @Repository
+@Mapper
 public interface CookingMapper {
   /**
-   * insert one recipe into  table cooking
+   * insert one recipe into  table cooking.
    */
-  @Insert("INSERT INTO `cooking`(`cookingName`, `cookingStyle`, `cookingDate`, `authorId`, `cookingPicture`, " +
-          "`cookingIntro`, `tips`, `step`, `ingredient`) VALUES(#{cookingName}, #{cookingStyle}," +
-          " #{cookingDate}, #{authorId}, #{cookingPicture}, #{cookingIntro}, #{tips}, #{step}, " +
-          "#{ingredient}) ")
+  @Insert("INSERT INTO `cooking`(`cookingName`, `cookingStyle`, `cookingDate`, `authorId`, "
+          + "`cookingPicture`, `cookingIntro`, `tips`, `step`, `ingredient`) VALUES "
+          + "(#{cookingName}, #{cookingStyle}, #{cookingDate}, #{authorId}, #{cookingPicture}, "
+          + "#{cookingIntro}, #{tips}, #{step}, #{ingredient})")
   int addCooking(Cooking cooking);
 
   /**
-   * select one recipe by cookingId
+   * select one recipe by cookingId.
    *
    * @return Cooking
    */
@@ -35,9 +40,10 @@ public interface CookingMapper {
   /**
    * UPDATE  one recipe's information except authorId,cookingId,state,cookingDate,cookingLikeNum
    */
-  @Update("UPDATE `cooking` SET `cookingName` = #{cookingName}, `cookingStyle` = #{cookingStyle}," +
-          " `cookingPicture` = #{cookingPicture}, `cookingIntro` = #{cookingIntro}, `step` = #{step}, `tips` = #{tips}," +
-          "`ingredient` = #{ingredient} WHERE `cookingId` = #{cookingId} AND `state` = 0")
+  @Update("UPDATE `cooking` SET `cookingName` = #{cookingName}, `cookingStyle` = #{cookingStyle},"
+          + " `cookingPicture` = #{cookingPicture}, `cookingIntro` = #{cookingIntro}, "
+          + "`step` = #{step}, `tips` = #{tips}, `ingredient` = #{ingredient} WHERE "
+          + "`cookingId` = #{cookingId} AND `state` = 0")
   int updateCooking(Cooking cooking);
 
   /**
@@ -57,23 +63,23 @@ public interface CookingMapper {
   /**
    * select all cooking by keywords such as ingredient,cookingName, cookingStyleName
    *
-   * @return List<Cooking>
+   * @return List
    */
-  @Select("SELECT * FROM `cooking` WHERE `cookingName` Like %#{keywords}% OR `ingredient` Like " +
-          "%#{keywords}% OR `cookingStyle` Like %#{keywords}%  AND `state` = 0")
-  List<Cooking> findCookingByKerwords(String keywords);
+  @Select("SELECT * FROM `cooking` WHERE `cookingName` Like %#{keywords}% OR `ingredient` Like "
+          + "%#{keywords}% OR `cookingStyle` Like %#{keywords}%  AND `state` = 0")
+  List<Cooking> findCookingByKeywords(String keywords);
 
   /**
-   * select all cooking
+   * select all cooking.
    */
   @Select("SELECT * FROM `cooking`")
   List<Cooking> all();
 
   @Update("UPDATE `cooking` SET `cookingLikeNum` = `cookingLikeNum` + 1 WHERE `cookingId`"
-          + " = #{cookingId}")
+          + " = #{cookingId} AND `state`=0")
   int likeNumIncr(long cookingId);
 
   @Update("UPDATE `cooking` SET `cookingLikeNum` = `cookingLikeNum` - 1 WHERE `cookingId`"
-          + " = #{cookingId}")
+          + " = #{cookingId} AND `state`=0")
   int likeNumDecr(long cookingId);
 }

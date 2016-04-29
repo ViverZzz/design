@@ -135,7 +135,6 @@ public class CookingApi {
   public ResponseEntity update(@PathVariable long cookingId, @RequestBody Cooking cooking) {
     cooking.setCookingId(cookingId);
     int count = cookingService.updateCooking(cooking);
-
     if (count == 1) {
       return ResponseEntity.ok(cooking);
     }
@@ -151,7 +150,7 @@ public class CookingApi {
   @RequestMapping(value = "{cookingId}", method = RequestMethod.DELETE)
 //  @Authorization({Role.ADMIN, Role.USER})
   public ResponseEntity markDelete(@PathVariable long cookingId) {
-    int count = cookingService.markCookingDetele(cookingId);
+    int count = cookingService.markCookingDelete(cookingId);
     if (count == 1) {
       return ResponseEntity.ok("删除成功");
     }
